@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập Biến Đổi Câu - Ms Lê Hằng English</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --accent-color: #FDCB6E;
+            --teal-color: #00C9A7;
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-color: #2D3436;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Hiệu ứng Nền loang màu linh hoạt chuyển động liên tục + Họa tiết SVG lơ lửng độc lập */
+        body {
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #FF7675);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0.14;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M20 20 L30 20 L30 30 L20 30 Z M70 20 A 8 8 0 1 1 70 36 A 8 8 0 1 1 70 20 M50 70 L55 80 L65 80 L57 86 L60 96 L50 90 L40 96 L43 86 L35 80 L45 80 Z' /%3E%3Cpath d='M10 70 C 15 60, 30 60, 35 70 C 40 80, 25 90, 10 70 Z M85 75 A 10 10 0 1 1 85 74 Z' /%3E%3C/g%3E%3C/svg%3E");
+            animation: patternFloat 25s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes patternFloat {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 1000px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 760px;
+            z-index: 1;
+        }
+
+        /* Heading nhỏ gọn tinh tế bảo toàn diện tích hiển thị */
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        header h5 {
+            font-size: 1.05rem;
+            color: #FFFFFF;
+            background: rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Khung thông báo nhắc nhở cực kỳ quan trọng */
+        .warning-box {
+            background: #FFEAA7;
+            border: 4px solid #FDCB6E;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 0 #E17055;
+            color: #2D3436;
+            text-align: center;
+        }
+
+        .warning-box h4 {
+            font-size: 1.25rem;
+            color: #D63031;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .warning-box p {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        .warning-box em {
+            display: block;
+            margin-top: 10px;
+            color: #6C5CE7;
+            font-style: normal;
+            font-weight: 900;
+        }
+
+        /* Bố cục cấu trúc dạng thẻ bài Card nổi bật giữa màn hình */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            border: 3px solid #E0E0E0;
+            transition: transform 0.2s ease;
+        }
+
+        .card-meta-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #A0A0A0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-color);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            background: #F8F9FA;
+            padding: 12px;
+            border-radius: 12px;
+            border-left: 5px solid #6C5CE7;
+        }
+
+        .prompt-text {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #2C3E50;
+            margin-bottom: 15px;
+        }
+
+        /* Nút chọn đáp án hiệu ứng 3D nổi bo góc lớn */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #FFFFFF;
+            border: 3px solid #E0E0E0;
+            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #E0E0E0;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            transform: scale(1.01) translateY(-2px);
+            box-shadow: 0 8px 0 #D0D0D0;
+            background: #FAEDFF;
+        }
+
+        .option-btn:active:not(.disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #D0D0D0;
+        }
+
+        /* Định vị tông màu Đúng/Sai theo cài đặt thiết lập thiết kế */
+        .option-btn.correct {
+            background: var(--correct-color) !important;
+            border-color: #00B359 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #008040 !important;
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-color) !important;
+            border-color: #E03847 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #B32431 !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Hiệu ứng rung lắc khi chọn đáp án sai */
+        @keyframes shakeAction {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake-animation {
+            animation: shakeAction 0.4s ease-in-out;
+        }
+
+        /* Khung hiển thị giải thích siêu chi tiết bung nở tức thì */
+        .explanation-box {
+            margin-top: 20px;
+            background: #F3EAFE;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 15px 18px;
+            display: none;
+            animation: slideDown 0.4s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation-title {
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .explanation-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .explanation-content strong {
+            color: #000000;
+        }
+
+        /* Nút nộp bài tổng kết cuối trang */
+        .submit-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .submit-all-btn {
+            background: #6C5CE7;
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 22px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #4834D4;
+            transition: all 0.1s;
+        }
+
+        .submit-all-btn:hover {
+            background: #5F27CD;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #4834D4;
+        }
+
+        .submit-all-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #4834D4;
+        }
+
+        /* Canvas cấu hình pháo giấy chúc mừng Confetti */
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Giao diện Popup thông báo tổng điểm và lời khuyên */
+        .modal-mask {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-mask.active { opacity: 1; pointer-events: auto; }
+        .modal-container {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            max-width: 520px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+            border: 4px solid var(--accent-color);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        .modal-mask.active .modal-container { transform: scale(1); }
+        .modal-score { font-size: 3rem; font-weight: 900; color: var(--primary-color); margin: 15px 0; }
+        .modal-feedback { font-size: 1.05rem; color: var(--text-color); font-weight: 700; line-height: 1.6; margin-bottom: 25px; }
+        .modal-btn {
+            background: var(--teal-color);
+            color: white; border: none; padding: 12px 30px;
+            font-size: 1.05rem; font-weight: 700; border-radius: 14px;
+            box-shadow: 0 4px 0 #00A387; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h5>Giáo viên tạo: Ms Lê Hằng English</h5>
+        </header>
+
+        <div class="warning-box">
+            <h4>⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</h4>
+            <p>Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.</p>
+            <p>Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!</p>
+            <em>* Kéo tới đâu, làm tới đó! *</em>
+        </div>
+
+        <div id="quiz-injector-node"></div>
+
+        <div class="submit-section">
+            <button class="submit-all-btn" onclick="processQuizEvaluation()">NỘP BÀI CHẤM ĐIỂM 🎉</button>
+        </div>
+    </div>
+
+    <div class="modal-mask" id="score-modal">
+        <div class="modal-container">
+            <h2>🏆 KẾT QUẢ BÀI KIỂM TRA 🏆</h2>
+            <div class="modal-score" id="score-text">0 / 50</div>
+            <div class="modal-feedback" id="feedback-text">Lời khuyên từ cô giáo...</div>
+            <button class="modal-btn" onclick="reloadQuizLayout()">Làm Lại Từ Đầu 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // Hệ thống âm thanh tự động tổng hợp Web Audio API (Không phụ thuộc file ngoài)
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        let audioContextInstance = null;
+
+        function triggerSyntheticSound(status) {
+            try {
+                if (!audioContextInstance) audioContextInstance = new AudioCtxClass();
+                const osc = audioContextInstance.createOscillator();
+                const gain = audioContextInstance.createGain();
+                osc.connect(gain);
+                gain.connect(audioContextInstance.destination);
+
+                if (status === 'correct') {
+                    // Âm thanh 'Ding' vui tươi trong trẻo
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioContextInstance.currentTime); // C5
+                    osc.frequency.setValueAtTime(783.99, audioContextInstance.currentTime + 0.1); // G5
+                    gain.gain.setValueAtTime(0.2, audioContextInstance.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + 0.35);
+                    osc.start(audioContextInstance.currentTime);
+                    osc.stop(audioContextInstance.currentTime + 0.35);
+                } else if (status === 'wrong') {
+                    // Âm thanh 'Téo teo tèo' chùng xuống ngộ nghĩnh
+                    const time = audioContextInstance.currentTime;
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(196, time); // G3
+                    osc.frequency.setValueAtTime(146.83, time + 0.12); // D3
+                    osc.frequency.setValueAtTime(110, time + 0.25); // A2
+                    gain.gain.setValueAtTime(0.25, time);
+                    gain.gain.exponentialRampToValueAtTime(0.01, time + 0.45);
+                    osc.start(time);
+                    osc.stop(time + 0.45);
+                }
+            } catch (e) { console.log("AudioContext blocked or unsupportable."); }
+        }
+
+        // KHO DỮ LIỆU GỐC 50 CÂU TOÀN VẸN - KHÔNG CẮT XÉN - ĐÃ CHUYỂN TRẮC NGHIỆM ABCD VỚI GIẢI THÍCH 4 BƯỚC
+        const dataset = [
+            {
+                id: 1,
+                orig: "Sally gets on well with her father-in-law.",
+                prompt: "Sally is on ........................................................................................................",
+                options: [
+                    "good terms with her father-in-law.",
+                    "good relationship to her father-in-law.",
+                    "well terms with her father-in-law.",
+                    "bad relationship with her father-in-law."
+                ],
+                correct: "good terms with her father-in-law.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Sally có mối quan hệ rất tốt với bố chồng của cô ấy.<br><strong>2. Phân tích cụm từ 4 đáp án:</strong><br>- A. be on good terms with: có mối quan hệ tốt với ai.<br>- B. Sai giới từ (đúng phải là 'with' và cấu trúc khác).<br>- C. Sai từ loại cấu trúc từ ngữ.<br>- D. Ngược nghĩa hoàn toàn với câu gốc.<br><strong>3. Tại sao đúng:</strong> Động từ 'get on well with someone' đồng nghĩa hoàn toàn với cấu trúc thành ngữ cố định 'be on good terms with someone'.<br><strong>4. Tại sao các từ khác sai:</strong> Không đúng cấu trúc kết hợp từ (collocation) hoặc sai giới từ chính thống."
+            },
+            {
+                id: 2,
+                orig: "We paid some people to landscape the garden for us last year.",
+                prompt: "We had.............................................................................................................",
+                options: [
+                    "our garden landscaped last year.",
+                    "landscaped our garden last year.",
+                    "someone landscape our garden last year.",
+                    "our garden landscape last year."
+                ],
+                correct: "our garden landscaped last year.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Chúng tôi đã thuê người thiết kế cảnh quan khu vườn cho mình vào năm ngoái.<br><strong>2. Phân tích cấu trúc 4 đáp án:</strong><br>- A. Cấu trúc bị động nhờ vả: 'Have + Something + V3/V-ed'.<br>- B, C, D không tuân thủ chính xác công thức bị động truyền khiến hoặc sai thì.<br><strong>3. Tại sao đúng:</strong> Sử dụng cấu trúc truyền khiến bị động 'Have + tân ngữ chỉ vật (our garden) + V3/V-ed (landscaped)' để diễn tả việc thuê ai đó làm gì.<br><strong>4. Tại sao các từ khác sai:</strong> Vi phạm cấu trúc câu bị động nhờ vả quy chuẩn."
+            },
+            {
+                id: 3,
+                orig: "He worked very hard but he was unable to earn enough for his living.",
+                prompt: "Hard-working as...............................................................................................",
+                options: [
+                    "he was, he was unable to earn enough for his living.",
+                    "he worked, he was unable to earn enough for his living.",
+                    "as he was, he was unable to earn enough for his living.",
+                    "he is, he was unable to earn enough for his living."
+                ],
+                correct: "he was, he was unable to earn enough for his living.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Dù làm việc rất chăm chỉ, anh ấy vẫn không thể kiếm đủ tiền trang trải cuộc sống.<br><strong>2. Phân tích cấu trúc 4 đáp án:</strong><br>- A. Tính từ + as + S + V (Cấu trúc nhượng bộ).<br>- B. 'Hard-working' là tính từ nên không đi với động từ thường 'worked' ở cấu trúc này.<br>- C. Dư thừa chữ 'as'.<br>- D. Sai thì thời gian (câu gốc dùng quá khứ 'worked').<br><strong>3. Tại sao đúng:</strong> Cấu trúc nhượng bộ đảo ngữ: <em>'Adj + as/though + S + be'</em> tương đương với 'Although + S + be + Adj'.<br><strong>4. Tại sao các từ khác sai:</strong> Vi phạm quy tắc đảo ngữ nhượng bộ hoặc chia sai thì thời gian."
+            },
+            {
+                id: 4,
+                orig: "There is no situation in which we will allow the management to lower wages.",
+                prompt: "Under no ..........................................................................................................",
+                options: [
+                    "circumstances will we allow the management to lower wages.",
+                    "circumstances we will allow the management to lower wages.",
+                    "conditions will allow us to lower wages.",
+                    "situations we allow the management to lower wages."
+                ],
+                correct: "circumstances will we allow the management to lower wages.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Trong bất kỳ hoàn cảnh nào chúng tôi cũng sẽ không cho phép ban quản lý hạ thấp tiền lương.<br><strong>2. Phân tích cấu trúc 4 đáp án:</strong><br>- A. Có đảo ngữ trợ động từ 'will' lên trước chủ ngữ 'we'.<br>- B. Thiếu đảo ngữ ngữ pháp.<br>- C và D dịch sai nghĩa hoặc sai cấu trúc đảo ngữ.<br><strong>3. Tại sao đúng:</strong> Khi cụm từ mang tính phủ định <em>'Under no circumstances'</em> (Trong bất kỳ hoàn cảnh nào cũng không) đứng đầu câu, ta bắt buộc phải đảo ngữ đảo trợ động từ lên trước chủ ngữ.<br><strong>4. Tại sao các từ khác sai:</strong> Thiếu cấu trúc đảo ngữ bắt buộc khi có cụm từ phủ định đứng đầu câu."
+            },
+            {
+                id: 5,
+                orig: "Susan couldn't get to the date because of the heavy rain.",
+                prompt: "The heavy rain .................................................................................................",
+                options: [
+                    "prevented Susan from getting to the date.",
+                    "made Susan not get to the date.",
+                    "stopped Susan to get to the date.",
+                    "forbidden Susan from getting to the date."
+                ],
+                correct: "prevented Susan from getting to the date.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Cơn mưa nặng hạt đã ngăn cản Susan đến buổi hẹn hò.<br><strong>2. Phân tích cấu trúc 4 đáp án:</strong><br>- A. prevent + O + from + V-ing.<br>- B. Sai phong cách diễn đạt tự nhiên.<br>- C. Sai cấu trúc của stop (phải là 'from getting').<br>- D. Forbidden sai dạng động từ chia quá khứ.<br><strong>3. Tại sao đúng:</strong> Áp dụng công thức kinh điển để chỉ sự ngăn trở: <em>'prevent/stop someone FROM doing something'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Sai cấu trúc đi kèm của động từ hoặc chia sai thì."
+            },
+            {
+                id: 6,
+                orig: "Because the gym increased its fees last month, I am no longer a member. (UP)",
+                prompt: "If the gym .........................................................................................................",
+                options: [
+                    "hadn't put up its fees last month, I would still be a member.",
+                    "didn't increase its fees last month, I will be a member.",
+                    "wouldn't put up its fees last month, I would be a member.",
+                    "hadn't put up its fees last month, I am still a member."
+                ],
+                correct: "hadn't put up its fees last month, I would still be a member.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Nếu tháng trước phòng tập không tăng học phí, bây giờ tôi vẫn là một thành viên.<br><strong>2. Phân tích 4 đáp án:</strong> Câu gốc có nguyên nhân ở quá khứ ('last month') và kết quả ở hiện tại ('am no longer'). Đây phải là câu điều kiện hỗn hợp 3-2.<br><strong>3. Tại sao đúng:</strong> Vế điều kiện giả định quá khứ dùng Quá khứ hoàn thành ('hadn't put up' - cụm 'put up' tương đương 'increase'), vế kết quả hiện tại dùng 'would + V'.<br><strong>4. Tại sao các từ khác sai:</strong> Áp dụng sai loại câu điều kiện hoặc dùng sai cụm từ 'put up'."
+            },
+            {
+                id: 7,
+                orig: "Our boss is absolutely determined not to give us the pay rise. (INTENT)",
+                prompt: "Our boss .........................................................................................................",
+                options: [
+                    "is intent on not giving us the pay rise.",
+                    "intends to not give us the pay rise.",
+                    "is standard on not giving us the pay rise.",
+                    "has intention of not giving us the pay rise."
+                ],
+                correct: "is intent on not giving us the pay rise.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Sếp của chúng tôi hoàn toàn kiên định với ý định không tăng lương cho chúng tôi.<br><strong>2. Phân tích 4 đáp án:</strong> Đề bài yêu cầu dùng từ khóa 'INTENT'.<br>- A. Có cụm từ 'be intent on doing something' (quyết tâm làm gì).<br>- B, C, D không sử dụng đúng tính từ hoặc cấu trúc từ khóa cho sẵn.<br><strong>3. Tại sao đúng:</strong> Cấu trúc <em>'be intent on + V-ing'</em> diễn đạt một quyết tâm mãnh liệt, thay thế hoàn hảo cho cụm từ 'absolutely determined'.<br><strong>4. Tại sao các từ khác sai:</strong> Không dùng đúng từ khóa yêu cầu hoặc sai cấu trúc ngữ pháp đi kèm."
+            },
+            {
+                id: 8,
+                orig: "I really don't know what you're talking about. (FAINTEST)",
+                prompt: "I don't ...............................................................................................................",
+                options: [
+                    "have the faintest idea what you're talking about.",
+                    "know the faintest idea what you're talking about.",
+                    "have a single idea what you're talking about.",
+                    "faint any idea what you're talking about."
+                ],
+                correct: "have the faintest idea what you're talking about.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Tôi không có một chút ý niệm mảy may nào về việc bạn đang nói cái gì.<br><strong>2. Phân tích 4 đáp án:</strong> Đòi hỏi từ khóa 'FAINTEST'.<br>- A. Đúng cụm từ cố định idioms.<br>- B. Dùng sai động từ 'know'.<br>- C và D không chứa từ khóa hoặc sai cấu trúc.<br><strong>3. Tại sao đúng:</strong> Thành ngữ <em>'don't have the faintest idea'</em> mang ý nghĩa nhấn mạnh là hoàn toàn không biết, không hiểu một chút gì.<br><strong>4. Tại sao các từ khác sai:</strong> Không đi đúng cụm từ cố định của người bản xứ."
+            },
+            {
+                id: 9,
+                orig: "There's no point arguing about this small detail, in my opinion. (WORTH)",
+                prompt: "This small detail ..............................................................................................",
+                options: [
+                    "is not worth arguing about, in my opinion.",
+                    "is pointless to argue about it, in my opinion.",
+                    "has no point to argue about, in my opinion.",
+                    "is not worth to argue about, in my opinion."
+                ],
+                correct: "is not worth arguing about, in my opinion.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Chi tiết nhỏ này không đáng để tranh cãi, theo quan điểm của tôi.<br><strong>2. Phân tích cấu trúc 4 đáp án:</strong><br>- A. be worth + V-ing.<br>- B lặp từ 'it' thừa thãi.<br>- D sai cấu trúc (worth không đi với to-V).<br><strong>3. Tại sao đúng:</strong> Biến đổi cấu trúc <em>'There is no point in V-ing'</em> sang cấu trúc tương đương <em>'S + be (not) worth + V-ing'</em> (Cái gì đáng/không đáng làm gì).<br><strong>4. Tại sao các từ khác sai:</strong> Sai cấu trúc động từ đi sau tính từ 'worth'."
+            },
+            {
+                id: 10,
+                orig: "The film script was very different from the novel it was based on. (RESEMBLANCE)",
+                prompt: "The film script...................................................................................................",
+                options: [
+                    "bore little resemblance to the novel it was based on.",
+                    "had little resemblance with the novel it was based on.",
+                    "bore small resemblance to the novel it was based on.",
+                    "resembled very differently from the novel it was based on."
+                ],
+                correct: "bore little resemblance to the novel it was based on.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Kịch bản phim có rất ít điểm giống với cuốn tiểu thuyết gốc mà nó dựa vào.<br><strong>2. Phân tích kết hợp từ 4 đáp án:</strong><br>- A. bore little resemblance to (ít giống với).<br>- B. Sai giới từ đi kèm resemblance.<br>- C. Dùng sai tính từ 'small'.<br>- D. Sai cấu trúc động từ resemble.<br><strong>3. Tại sao đúng:</strong> Cụm danh từ cố định <em>'bear resemblance to someone/something'</em> (có nét giống với ai/cái gì). Trạng thái 'very different' tương ứng với mức độ giống cực ít (bore little resemblance).<br><strong>4. Tại sao các từ khác sai:</strong> Sai giới từ hoặc sai tính từ đi kèm cấu trúc cố định."
+            },
+            {
+                id: 11,
+                orig: "You don’t find such exquisite hand-made suits in many shops here.",
+                prompt: "In few ..............................................................................................................",
+                options: [
+                    "shops here do you find such exquisite hand-made suits.",
+                    "shops here you find such exquisite hand-made suits.",
+                    "shops here did you find such exquisite hand-made suits.",
+                    "shops here can find such exquisite hand-made suits."
+                ],
+                correct: "shops here do you find such exquisite hand-made suits.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Ở rất ít cửa hàng tại đây bạn mới tìm thấy những bộ vest may tay tinh xảo như vậy.<br><strong>2. Phân tích ngữ pháp đảo ngữ 4 đáp án:</strong> Cụm từ giới hạn phủ định 'In few shops' đứng đầu câu bắt buộc phải đảo ngữ ở hiện tại đơn.<br><strong>3. Tại sao đúng:</strong> Mượn trợ động từ 'do' đưa lên trước chủ ngữ 'you' tạo thành 'do you find'.<br><strong>4. Tại sao các từ khác sai:</strong> B thiếu đảo ngữ; C sai thì thời gian (quá khứ); D thiếu chủ ngữ."
+            },
+            {
+                id: 12,
+                orig: '"Don’t worry. Of course you can take a month’s paid leave", said my boss.',
+                prompt: "My boss reassured ..........................................................................................",
+                options: [
+                    "me that I could take a month’s paid leave.",
+                    "me to take a month’s paid leave.",
+                    "that I can take a month’s paid leave.",
+                    "about my taking a month’s paid leave."
+                ],
+                correct: "me that I could take a month’s paid leave.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Sếp của tôi đã trấn an tôi rằng tôi hoàn toàn có thể nghỉ phép một tháng hưởng nguyên lương.<br><strong>2. Phân tích lời nói gián tiếp 4 đáp án:</strong> Động từ 'reassure' cần có một tân ngữ chỉ người được trấn an trực tiếp theo sau.<br><strong>3. Tại sao đúng:</strong> Cấu trúc <em>'reassure someone THAT + clause'</em> và lùi thì động từ từ 'can' thành 'could' theo quy tắc câu gián tiếp.<br><strong>4. Tại sao các từ khác sai:</strong> Sai cấu trúc động từ hoặc chưa lùi thì thời gian quy chuẩn."
+            },
+            {
+                id: 13,
+                orig: "His insistence on dropping out of the race at the last minute came as no shock to everybody.",
+                prompt: "He ...................................................................................................................",
+                options: [
+                    "shocked nobody when he insisted on dropping out of the race at the last minute.",
+                    "was shocked by nobody when he insisted on dropping out of the race at the last minute.",
+                    "didn't shock to anybody when he dropped out of the race at the last minute.",
+                    "insisted on dropping out of the race which shocked everybody."
+                ],
+                correct: "shocked nobody when he insisted on dropping out of the race at the last minute.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Anh ấy chẳng làm ai kinh ngạc khi khăng khăng đòi bỏ cuộc đua vào phút cuối.<br><strong>2. Phân tích logic câu 4 đáp án:</strong> 'came as no shock to everybody' nghĩa là hành động đó không làm ai bất ngờ.<br><strong>3. Tại sao đúng:</strong> Chuyển sang chủ ngữ người 'He + shocked nobody' (không làm ai sốc) giữ nguyên tính chất ngữ nghĩa gốc.<br><strong>4. Tại sao các từ khác sai:</strong> Biến đổi sai thể bị động (B), sai giới từ (C) hoặc ngược nghĩa hoàn toàn (D)."
+            },
+            {
+                id: 14,
+                orig: "What are the chances of Twilight 2 being a huge box-office success?",
+                prompt: "How likely.........................................................................................................",
+                options: [
+                    "is Twilight 2 to be a huge box-office success?",
+                    "will Twilight 2 being a huge box-office success?",
+                    "is the chance of Twilight 2 being a huge box-office success?",
+                    "likely that Twilight 2 will be a huge box-office success?"
+                ],
+                correct: "is Twilight 2 to be a huge box-office success?",
+                explain: "<strong>1. Dịch nghĩa:</strong> Khả năng phần phim Twilight 2 đạt thành công lớn về doanh thu phòng vé là bao nhiêu?<br><strong>2. Phân tích cấu trúc câu hỏi 4 đáp án:</strong> Cấu trúc với tính từ likely: 'be likely to-V'.<br><strong>3. Tại sao đúng:</strong> Chuyển sang dạng câu hỏi với How: <em>'How + likely + be + S + to-V?'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Sai ngữ pháp cấu trúc từ nối hoặc lắp ghép từ lủng củng không đúng công thức."
+            },
+            {
+                id: 15,
+                orig: "I wish you hadn’t breathed a word about his private life to anyone.",
+                prompt: "I would like .......................................................................................................",
+                options: [
+                    "you not to have breathed a word about his private life to anyone.",
+                    "that you didn't breathe a word about his private life to anyone.",
+                    "you to not breathe a word about his private life to anyone.",
+                    "you hadn't breathed a word about his private life to anyone."
+                ],
+                correct: "you not to have breathed a word about his private life to anyone.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Tôi muốn bạn đã không hé răng một lời nào về đời tư của anh ấy với bất kỳ ai.<br><strong>2. Phân tích cấu trúc giả định quá khứ 4 đáp án:</strong> Câu gốc ước cho một việc đã xảy ra trong quá khứ ('hadn't breathed').<br><strong>3. Tại sao đúng:</strong> Cấu trúc <em>'would like + someone + NOT + to have + V3/V-ed'</em> diễn tả mong muốn một hành động trong quá khứ đáng lẽ nên khác đi.<br><strong>4. Tại sao các từ khác sai:</strong> Không phản ánh đúng mốc thời gian quá khứ hoặc sai vị trí trạng từ phủ định 'not'."
+            },
+            {
+                id: 16,
+                orig: "Jack doesn’t know all the answers, though he pretends to.",
+                prompt: "Jack acts .........................................................................................................",
+                options: [
+                    "as if he knew all the answers.",
+                    "as if he knows all the answers.",
+                    "like he knows all the answers.",
+                    "as though he has known all the answers."
+                ],
+                correct: "as if he knew all the answers.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Jack cư xử cứ như thể anh ấy biết mọi câu trả lời vậy (thực tế là không biết).<br><strong>2. Phân tích giả định hiện tại 4 đáp án:</strong> Giả định điều trái ngược thực tế ở hiện tại sau cụm từ 'as if/as though'.<br><strong>3. Tại sao đúng:</strong> Quy tắc bắt buộc phải lùi thì thời gian từ hiện tại đơn sang quá khứ đơn ('knew').<br><strong>4. Tại sao các từ khác sai:</strong> Chưa lùi thì ngữ pháp để thể hiện tính chất giả định không có thật ở hiện tại."
+            },
+            {
+                id: 17,
+                orig: "The realization of what she had sacrificed for him led him to believe she was all the world to him.",
+                prompt: "Not .................................................................................................................",
+                options: [
+                    "until he realized what she had sacrificed for him did he believe she was all the world to him.",
+                    "only he realized what she had sacrificed for him did he believe she was all the world to him.",
+                    "until he realized what she had sacrificed for him he believed she was all the world to him.",
+                    "since he realized what she had sacrificed for him did he believe she was all the world to him."
+                ],
+                correct: "until he realized what she had sacrificed for him did he believe she was all the world to him.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Mãi cho đến khi anh ấy nhận ra những gì cô ấy đã hy sinh vì mình, anh ấy mới tin rằng cô ấy là cả thế giới đối với mình.<br><strong>2. Phân tích cấu trúc đảo ngữ 4 đáp án:</strong> Cấu trúc 'Not until + clause' đứng đầu câu đòi hỏi đảo ngữ vế sau.<br><strong>3. Tại sao đúng:</strong> Đảo ngữ chính xác ở vế thứ hai: mượn trợ động từ quá khứ 'did' đặt trước chủ ngữ 'he' (did he believe).<br><strong>4. Tại sao các từ khác sai:</strong> B sai từ nối; C thiếu đảo ngữ vế sau; D sai liên từ ngữ pháp."
+            },
+            {
+                id: 18,
+                orig: "We rely too much on the Internet. Therefore, our lives are in danger of becoming more impersonal.",
+                prompt: "Were ...............................................................................................................",
+                options: [
+                    "we not to rely so much on the Internet, our lives would not be in danger of becoming more impersonal.",
+                    "we to rely too much on the Internet, our lives would be in danger of becoming more impersonal.",
+                    "we not relying so much on the Internet, our lives are not in danger of becoming more impersonal.",
+                    "it not for our reliance on the Internet, our lives will be in danger of becoming more impersonal."
+                ],
+                correct: "we not to rely so much on the Internet, our lives would not be in danger of becoming more impersonal.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Nếu chúng ta không phụ thuộc quá nhiều vào Internet, cuộc sống của chúng ta đã không có nguy cơ trở nên thiếu nhân văn hơn.<br><strong>2. Phân tích câu điều kiện loại 2 đảo ngữ 4 đáp án:</strong> Câu gốc là thực tế hiện tại, giả định trái ngược phải dùng điều kiện loại 2.<br><strong>3. Tại sao đúng:</strong> Đảo ngữ loại 2 với động từ thường: <em>'Were + S + NOT + to-V'</em>. Vế sau dùng 'would not be'.<br><strong>4. Tại sao các từ khác sai:</strong> Vi phạm công thức đảo ngữ câu điều kiện hoặc chia sai dạng động từ vế kết quả."
+            },
+            {
+                id: 19,
+                orig: "Their work on developing an H1N1 vaccine is already under way to cope with the new strain.",
+                prompt: "They .................................................................................................................",
+                options: [
+                    "are already working on developing an H1N1 vaccine to cope with the new strain.",
+                    "have already worked on developing an H1N1 vaccine to cope with the new strain.",
+                    "are under way to work on developing an H1N1 vaccine to cope with the new strain.",
+                    "already develop an H1N1 vaccine to cope with the new strain."
+                ],
+                correct: "are already working on developing an H1N1 vaccine to cope with the new strain.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Họ hiện đang tiến hành nghiên cứu phát triển vắc-xin H1N1 để đối phó với chủng virus mới.<br><strong>2. Phân tích tính tiếp diễn 4 đáp án:</strong> Cụm từ 'under way' biểu thị sự việc đang tiến triển, đang diễn ra liên tục.<br><strong>3. Tại sao đúng:</strong> Chuyển dịch sang cấu trúc thì Hiện tại tiếp diễn <em>'be + working on'</em> giữ nguyên bản chất đang thực hiện.<br><strong>4. Tại sao các từ khác sai:</strong> Chia sai thì hoàn thành (B) hoặc lặp từ sai cấu trúc diễn đạt lủng củng (C)."
+            },
+            {
+                id: 20,
+                orig: "Nowadays I consider taking up a hobby to be far less important than I used to.",
+                prompt: "Nowadays I don’t attach nearly ........................................................................",
+                options: [
+                    "as much importance to taking up a hobby as I used to.",
+                    "more importance to taking up a hobby than I used to.",
+                    "far less importance to taking up a hobby as I used to.",
+                    "so many importance to taking up a hobby as I used to."
+                ],
+                correct: "as much importance to taking up a hobby as I used to.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Ngày nay tôi không còn coi trọng việc bắt đầu một sở thích nhiều như tôi đã từng làm trước đây nữa.<br><strong>2. Phân tích cụm từ đi kèm 4 đáp án:</strong> Cấu trúc cố định là 'attach importance to something' (coi trọng cái gì).<br><strong>3. Tại sao đúng:</strong> Kết hợp cấu trúc so sánh bằng thể phủ định: <em>'don't attach nearly + as much + danh từ không đếm được (importance) + as'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Dùng sai trạng từ so sánh hoặc dùng sai từ lượng 'many' cho danh từ không đếm được."
+            },
+            {
+                id: 21,
+                orig: "The flight from Bangkok to London lasted for more than twelve hours.",
+                prompt: "It took ...............................................................................................................",
+                options: [
+                    "more than twelve hours to fly from Bangkok to London.",
+                    "more than twelve hours for the flight from Bangkok to London.",
+                    "twelve hours more to fly from Bangkok to London.",
+                    "us more than twelve hours flying from Bangkok to London."
+                ],
+                correct: "more than twelve hours to fly from Bangkok to London.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Mất hơn mười hai tiếng đồng hồ để bay từ Bangkok đến London.<br><strong>2. Phân tích cấu trúc thời gian 4 đáp án:</strong> Công thức tốn thời gian: 'It takes/took + thời gian + to-V'.<br><strong>3. Tại sao đúng:</strong> Áp dụng chuẩn công thức với động từ hành động 'to fly' thay thế cho danh từ 'the flight'.<br><strong>4. Tại sao các từ khác sai:</strong> Thiếu động từ nguyên mẫu có to hoặc đảo lộn vị trí trật tự từ vựng."
+            },
+            {
+                id: 22,
+                orig: "No decision on the issue has been made yet.",
+                prompt: "Nothing.............................................................................................................",
+                options: [
+                    "has been decided on the issue yet.",
+                    "is decided on the issue yet.",
+                    "hasn't been decided on the issue yet.",
+                    "was decided on the issue yet."
+                ],
+                correct: "has been decided on the issue yet.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Vẫn chưa có điều gì được quyết định về vấn đề này cả.<br><strong>2. Phân tích thể bị động 4 đáp án:</strong> Câu gốc chia ở thì Hiện tại hoàn thành bị động ('has been made') đi với từ 'yet'.<br><strong>3. Tại sao đúng:</strong> Chuyển sang chủ ngữ 'Nothing' giữ nguyên cấu trúc bị động hiện tại hoàn thành khẳng định vì bản thân 'Nothing' đã mang nghĩa phủ định.<br><strong>4. Tại sao các từ khác sai:</strong> Chia sai thì thời gian hoặc mắc lỗi phủ định kép (C)."
+            },
+            {
+                id: 23,
+                orig: "You can borrow the car but you’ve got to fill it up with petrol.",
+                prompt: "Provided...........................................................................................................",
+                options: [
+                    "you fill the car up with petrol, you can borrow it.",
+                    "you will fill the car up with petrol, you can borrow it.",
+                    "that you filled the car up with petrol, you can borrow it.",
+                    "you to fill the car up with petrol, you can borrow it."
+                ],
+                correct: "you fill the car up with petrol, you can borrow it.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Miễn là bạn đổ đầy xăng cho xe, bạn có thể mượn nó.<br><strong>2. Phân tích liên từ điều kiện 4 đáp án:</strong> 'Provided (that)' đóng vai trò như liên từ 'If' trong câu điều kiện loại 1.<br><strong>3. Tại sao đúng:</strong> Mệnh đề đi ngay sau 'Provided' chia ở hiện tại đơn chỉ điều kiện có thể xảy ra.<br><strong>4. Tại sao các từ khác sai:</strong> Dùng trợ động từ 'will' trong mệnh đề điều kiện (B) hoặc lùi thì vô lý (C)."
+            },
+            {
+                id: 24,
+                orig: "It's quite pointless to complain about the situation.",
+                prompt: "There is no .......................................................................................................",
+                options: [
+                    "point in complaining about the situation.",
+                    "point to complain about the situation.",
+                    "use to complain about the situation.",
+                    "reason in complaining about the situation."
+                ],
+                correct: "point in complaining about the situation.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Chẳng có ích gì/vô ích khi phàn nàn về tình huống này cả.<br><strong>2. Phân tích công thức cấu trúc 4 đáp án:</strong><br>- A. Đúng công thức 'There is no point in + V-ing'.<br>- B, C, D áp dụng sai cấu trúc đi kèm của danh từ.<br><strong>3. Tại sao đúng:</strong> Biến đổi từ tính từ 'pointless' sang cấu trúc danh từ đồng nghĩa <em>'There is no point in + V-ing'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Không tuân thủ cấu trúc ngữ pháp cố định."
+            },
+            {
+                id: 25,
+                orig: "Susan finds it easy to make friends at her new school.",
+                prompt: "Susan has no ...................................................................................................",
+                options: [
+                    "difficulty making friends at her new school.",
+                    "difficulty to make friends at her new school.",
+                    "ease in making friends at her new school.",
+                    "problems to make friends at her new school."
+                ],
+                correct: "difficulty making friends at her new school.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Susan không gặp bất kỳ khó khăn nào trong việc kết bạn ở ngôi trường mới.<br><strong>2. Phân tích công thức 4 đáp án:</strong> Câu gốc khen ngợi sự dễ dàng ('finds it easy'), đổi sang dạng phủ định của khó khăn.<br><strong>3. Tại sao đúng:</strong> Công thức <em>'have no difficulty + V-ing'</em> (không gặp khó khăn làm gì).<br><strong>4. Tại sao các từ khác sai:</strong> Thêm 'to-V' sai quy tắc ngữ pháp đi sau danh từ difficulty."
+            },
+            {
+                id: 26,
+                orig: "There are a lot of vehicles on the road today.",
+                prompt: "There is ............................................................................................................",
+                options: [
+                    "a lot of traffic on the road today.",
+                    "many traffics on the road today.",
+                    "a lot of vehicles on the road today.",
+                    "much vehicles on the road today."
+                ],
+                correct: "a lot of traffic on the road today.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Có rất nhiều phương tiện giao thông trên đường ngày hôm nay.<br><strong>2. Phân tích danh từ 4 đáp án:</strong> Gợi ý mở đầu bằng 'There is' (đi với danh từ số ít hoặc không đếm được).<br><strong>3. Tại sao đúng:</strong> Danh từ số nhiều 'vehicles' được thay thế bằng danh từ không đếm được mang nghĩa tương đương là <em>'traffic'</em> (giao thông).<br><strong>4. Tại sao các từ khác sai:</strong> 'vehicles' là số nhiều không đi với 'There is'; 'traffic' không đếm được nên không có dạng thêm s số nhiều 'traffics'."
+            },
+            {
+                id: 27,
+                orig: "Martin may not be very well but he still manages to enjoy life.",
+                prompt: "Martin’s ............................................................................................................",
+                options: [
+                    "poor health doesn't prevent him from enjoying life.",
+                    "illness doesn't make him enjoy life.",
+                    "poor health manages him to enjoy life.",
+                    "wellness doesn't stop him enjoying life."
+                ],
+                correct: "poor health doesn't prevent him from enjoying life.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Sức khỏe yếu kém của Martin không thể ngăn cản anh ấy tận hưởng cuộc sống vui vẻ.<br><strong>2. Phân tích cụm từ sở hữu 4 đáp án:</strong> Khởi đầu bằng sở hữu cách 'Martin's' cần một danh từ chỉ tình trạng sức khỏe không tốt ('poor health').<br><strong>3. Tại sao đúng:</strong> Kết hợp cấu trúc <em>'prevent someone from V-ing'</em> diễn đạt trọn vẹn ý đối lập dù ốm yếu vẫn lạc quan của câu gốc.<br><strong>4. Tại sao các từ khác sai:</strong> Sai lệch logic ngữ nghĩa hoặc dùng từ loại không tương xứng."
+            },
+            {
+                id: 28,
+                orig: "Thanks to his aunt’s legacy of £10.000 he was able to buy the house he wanted.",
+                prompt: "Had his ............................................................................................................",
+                options: [
+                    "aunt not left him a legacy of £10,000, he wouldn't have been able to buy the house he wanted.",
+                    "aunt left him a legacy of £10,000, he would have been able to buy the house he wanted.",
+                    "aunt didn't leave him a legacy of £10,000, he wouldn't be able to buy the house he wanted.",
+                    "aunt not given him a legacy of £10,000, he can't buy the house he wanted."
+                ],
+                correct: "aunt not left him a legacy of £10,000, he wouldn't have been able to buy the house he wanted.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Nếu dì của anh ấy không để lại cho anh ấy khoản thừa kế 10.000 bảng, anh ấy đã không thể mua được ngôi nhà mình mong muốn.<br><strong>2. Phân tích đảo ngữ điều kiện loại 3 của 4 đáp án:</strong> Hành động trong quá khứ, giả định ngược lại phải dùng điều kiện loại 3.<br><strong>3. Tại sao đúng:</strong> Công thức đảo ngữ loại 3 phủ định: <em>'Had + S + NOT + V3/V-ed'</em>. Vế sau dùng 'wouldn't have V3'.<br><strong>4. Tại sao các từ khác sai:</strong> B sai nghĩa khẳng định; C sai cấu trúc đảo ngữ; D sai cấu trúc vế kết quả."
+            },
+            {
+                id: 29,
+                orig: "Mary was the only student absent from class.",
+                prompt: "Apart ................................................................................................................",
+                options: [
+                    "from Mary, every student was present in class.",
+                    "from Mary, no other students were absent from class.",
+                    "with Mary, all students were present in class.",
+                    "to Mary, every student was present in class."
+                ],
+                correct: "from Mary, every student was present in class.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Ngoại trừ Mary ra thì tất cả học sinh đều có mặt đông đủ ở trong lớp học.<br><strong>2. Phân tích giới từ 4 đáp án:</strong> Cụm từ ngoại trừ cố định là 'Apart from' (ngoài ra/ngoại trừ).<br><strong>3. Tại sao đúng:</strong> Mary nghỉ học nghĩa là tất cả những người còn lại đều đi học đầy đủ ('every student was present').<br><strong>4. Tại sao các từ khác sai:</strong> Dùng sai giới từ đi kèm 'with/to' hoặc viết câu lủng củng sai logic thực tế (B)."
+            },
+            {
+                id: 30,
+                orig: "Jane hasn’t made much progress at school.",
+                prompt: "Jane has only...................................................................................................",
+                options: [
+                    "made a little progress at school.",
+                    "made few progress at school.",
+                    "progressed much at school.",
+                    "made many progress at school."
+                ],
+                correct: "made a little progress at school.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Jane chỉ mới có một chút tiến bộ nhỏ ở trường học.<br><strong>2. Phân tích lượng từ 4 đáp án:</strong> 'progress' là danh từ không đếm được.<br><strong>3. Tại sao đúng:</strong> Câu gốc phủ định 'hasn't made much' (không tiến bộ nhiều) tương đương với dạng khẳng định đi kèm từ giới hạn 'has only made a little' (chỉ tiến bộ một chút).<br><strong>4. Tại sao các từ khác sai:</strong> 'few' và 'many' chỉ đi với danh từ đếm được số nhiều, không đi với progress."
+            },
+            {
+                id: 31,
+                orig: "My parents find fault with everything I do.",
+                prompt: "No matter .........................................................................................................",
+                options: [
+                    "what I do, my parents find fault with it.",
+                    "how I do, my parents find fault with everything.",
+                    "what do I do, my parents find fault with it.",
+                    "whatever I do, my parents find fault with it."
+                ],
+                correct: "what I do, my parents find fault with it.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Dù cho tôi có làm bất cứ điều gì đi chăng nữa, bố mẹ tôi vẫn tìm ra lỗi sai chỉ trích nó.<br><strong>2. Phân tích cấu trúc từ nối 4 đáp án:</strong> Cấu trúc nhượng bộ: 'No matter what + S + V'.<br><strong>3. Tại sao đúng:</strong> 'No matter what I do' thay thế hoàn hảo cho cụm chỉ vật 'everything I do'.<br><strong>4. Tại sao các từ khác sai:</strong> B sai đại từ nối; C mắc bẫy đảo ngữ câu hỏi; D bị lặp từ thừa thãi (no matter what tương đương với whatever, không dùng chung)."
+            },
+            {
+                id: 32,
+                orig: "It’s the cheapest watch but it’s the nicest. (NOT ONLY)",
+                prompt: "Not only............................................................................................................",
+                options: [
+                    "is it the cheapest watch, but it is also the nicest.",
+                    "it is the cheapest watch, but it is also the nicest.",
+                    "is it the cheapest watch, it is the nicest too.",
+                    "is it the cheapest watch, but also it is the nicest."
+                ],
+                correct: "is it the cheapest watch, but it is also the nicest.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Nó không chỉ là chiếc đồng hồ rẻ nhất mà nó còn là chiếc đẹp đẽ nhất nữa.<br><strong>2. Phân tích đảo ngữ 4 đáp án:</strong> Khi 'Not only' đứng đầu câu, mệnh đề ngay sát nó phải thực hiện đảo ngữ.<br><strong>3. Tại sao đúng:</strong> Đảo 'is' lên trước chủ ngữ 'it' tạo thành 'is it', vế sau dùng liên từ tương hợp 'but ... also'.<br><strong>4. Tại sao các từ khác sai:</strong> Thiếu đảo ngữ ngữ pháp (B) hoặc đặt sai vị trí cấu trúc liên từ kết hợp."
+            },
+            {
+                id: 33,
+                orig: "The police didn’t at all suspect that the judge was the murder.",
+                prompt: "Little .................................................................................................................",
+                options: [
+                    "did the police suspect that the judge was the murderer.",
+                    "the police suspected that the judge was the murderer.",
+                    "did the police suspected that the judge was the murderer.",
+                    "had the police suspected that the judge was the murderer."
+                ],
+                correct: "did the police suspect that the judge was the murderer.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Cảnh sát hoàn toàn không hề nghi ngờ rằng vị thẩm phán lại chính là kẻ sát nhân.<br><strong>2. Phân tích đảo ngữ phủ định 4 đáp án:</strong> Trạng từ bán phủ định 'Little' (gần như không) đứng đầu câu bắt buộc đảo ngữ.<br><strong>3. Tại sao đúng:</strong> Mượn trợ động từ quá khứ 'did' đặt trước chủ ngữ và đưa động từ chính về nguyên mẫu: 'did the police suspect'.<br><strong>4. Tại sao các từ khác sai:</strong> B thiếu đảo ngữ; C lỗi lặp lại động từ chia quá khứ; D sai thì thời gian."
+            },
+            {
+                id: 34,
+                orig: "“What you have cooked is the best in the world!”, John said to his girlfriend.",
+                prompt: "John congratulated...........................................................................................",
+                options: [
+                    "his girlfriend on cooking the best food in the world.",
+                    "his girlfriend for cooking the best food in the world.",
+                    "his girlfriend to cook the best food in the world.",
+                    "on his girlfriend's cooking the best food in the world."
+                ],
+                correct: "his girlfriend on cooking the best food in the world.",
+                explain: "<strong>1. Dịch nghĩa:</strong> John đã chúc mừng bạn gái của anh ấy vì đã nấu món ăn ngon nhất trên đời.<br><strong>2. Phân tích cấu trúc động từ báo thuật 4 đáp án:</strong> Công thức của động từ chúc mừng: 'congratulate someone ON something/V-ing'.<br><strong>3. Tại sao đúng:</strong> Áp dụng chuẩn xác giới từ 'on' đi liền sau tân ngữ chỉ người 'his girlfriend'.<br><strong>4. Tại sao các từ khác sai:</strong> Dùng sai giới từ 'for' (B), dùng to-V sai quy tắc (C) hoặc thiếu tân ngữ người đứng trực tiếp sau động từ (D)."
+            },
+            {
+                id: 35,
+                orig: "Now that his mother was being there, they said nothing about it.",
+                prompt: "On ....................................................................................................................",
+                options: [
+                    "account of his mother being there, they said nothing about it.",
+                    "behalf of his mother being there, they said nothing about it.",
+                    "the occasion of his mother being there, they said nothing about it.",
+                    "account of his mother was being there, they said nothing about it."
+                ],
+                correct: "account of his mother being there, they said nothing about it.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Bởi vì mẹ của anh ấy đang có mặt ở đó, họ đã không nói bất cứ điều gì về việc đó cả.<br><strong>2. Phân tích cụm giới từ chỉ nguyên nhân 4 đáp án:</strong> 'Now that' chỉ nguyên nhân tương đương với 'Because'.<br><strong>3. Tại sao đúng:</strong> Cụm từ <em>'On account of'</em> mang ý nghĩa là bởi vì, theo sau là một danh từ/danh động từ ('his mother being there').<br><strong>4. Tại sao các từ khác sai:</strong> 'On behalf of' nghĩa là thay mặt cho (sai nghĩa); D sai ngữ pháp vì sau cụm giới từ không được bê nguyên mệnh đề có động từ chia thì."
+            },
+            {
+                id: 36,
+                orig: "The last storm destroyed Lan’s house.",
+                prompt: "It’s high time.....................................................................................................",
+                options: [
+                    "Lan rebuilt her house.",
+                    "Lan rebuilds her house.",
+                    "Lan has rebuilt her house.",
+                    "for Lan to rebuild her house."
+                ],
+                correct: "Lan rebuilt her house.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Đã đến lúc Lan cần phải xây dựng lại ngôi nhà của mình rồi.<br><strong>2. Phân tích cấu trúc giả định câu 4 đáp án:</strong> Cấu trúc khuyên bảo mạnh mẽ: 'It's high time + S + V2/V-ed' (Đã đến lúc ai phải làm gì - giả định thời gian).<br><strong>3. Tại sao đúng:</strong> Động từ 'rebuild' được chia lùi thì chính xác về dạng quá khứ bất quy tắc là 'rebuilt'.<br><strong>4. Tại sao các từ khác sai:</strong> Vi phạm quy tắc lùi thì của cấu trúc giả định hiện tại với It's high time."
+            },
+            {
+                id: 37,
+                orig: "It took us three hours to find a room for the night. (SPENT)",
+                prompt: "We....................................................................................................................",
+                options: [
+                    "spent three hours finding a room for the night.",
+                    "spent three hours to find a room for the night.",
+                    "took three hours finding a room for the night.",
+                    "wasted three hours to find a room for the night."
+                ],
+                correct: "spent three hours finding a room for the night.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Chúng tôi đã dành ra ba tiếng đồng hồ để tìm kiếm một căn phòng nghỉ qua đêm.<br><strong>2. Phân tích cấu trúc 4 đáp án:</strong> Chuyển đổi công thức tiêu tốn thời gian sang cấu trúc dùng từ khóa 'SPENT'.<br><strong>3. Tại sao đúng:</strong> Áp dụng chuẩn công thức: <em>'S + spend + thời gian + V-ing (finding)'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Dùng 'to-V' đi sau spent là hoàn toàn vi phạm quy tắc ngữ pháp tiếng Anh cốt lõi."
+            },
+            {
+                id: 38,
+                orig: "Would you rather I stayed with you during the holidays? (PREFER)",
+                prompt: "Would you ........................................................................................................",
+                options: [
+                    "prefer me to stay with you during the holidays?",
+                    "prefer I stay with you during the holidays?",
+                    "rather me to stay with you during the holidays?",
+                    "prefer my staying with you during the holidays?"
+                ],
+                correct: "prefer me to stay with you during the holidays?",
+                explain: "<strong>1. Dịch nghĩa:</strong> Bạn có thích tôi ở lại cùng với bạn trong suốt kỳ nghỉ lễ hay không?<br><strong>2. Phân tích cấu trúc ước muốn mong đợi 4 đáp án:</strong> Đề bài yêu cầu dùng động từ 'PREFER'.<br><strong>3. Tại sao đúng:</strong> Áp dụng công thức cấu trúc: <em>'Would you prefer + someone + to-V'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Không tuân thủ công thức cấu tạo hệ động từ nguyên mẫu có 'to' đi kèm sau tân ngữ của từ prefer."
+            },
+            {
+                id: 39,
+                orig: "The police said Jim had stolen the money. (ACCUSED)",
+                prompt: "The police.........................................................................................................",
+                options: [
+                    "accused Jim of stealing the money.",
+                    "blamed Jim for stealing the money.",
+                    "accused Jim to steal the money.",
+                    "charged Jim with stealing the money."
+                ],
+                correct: "accused Jim of stealing the money.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Cảnh sát đã cáo buộc Jim về hành vi lấy trộm tiền bạc.<br><strong>2. Phân tích giới từ cấu trúc 4 đáp án:</strong> Từ khóa buộc phải dùng là 'accused'.<br><strong>3. Tại sao đúng:</strong> Công thức chuẩn mực pháp lý: <em>'accuse someone OF doing something'</em> (cáo buộc ai tội gì).<br><strong>4. Tại sao các từ khác sai:</strong> Dùng sai giới từ đi kèm với động từ hoặc áp dụng sai từ khóa đề bài ép buộc."
+            },
+            {
+                id: 40,
+                orig: "Because of his illness he could not work effectively. (IMPOSSIBLE)",
+                prompt: "His illness.........................................................................................................",
+                options: [
+                    "made it impossible for him to work effectively.",
+                    "made him impossible to work effectively.",
+                    "caused him impossible to work effectively.",
+                    "prevented him to work effectively."
+                ],
+                correct: "made it impossible for him to work effectively.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Căn bệnh của anh ấy đã khiến cho anh ấy không thể làm việc một cách có hiệu quả.<br><strong>2. Phân tích cấu trúc câu giả định/tác động 4 đáp án:</strong> Đòi hỏi sử dụng tính từ 'IMPOSSIBLE'.<br><strong>3. Tại sao đúng:</strong> Công thức cấu trúc câu với chủ ngữ giả: <em>'Make + it + adj (impossible) + for someone + to-V'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Thiếu chủ ngữ giả 'it' khiến câu văn vô nghĩa, sai ngữ pháp nghiêm trọng."
+            },
+            {
+                id: 41,
+                orig: "Both Peter and John don’t like tea.",
+                prompt: "Neither .............................................................................................................",
+                options: [
+                    "Peter nor John likes tea.",
+                    "Peter or John likes tea.",
+                    "Peter nor John don't like tea.",
+                    "of Peter and John likes tea."
+                ],
+                correct: "Peter nor John likes tea.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Cả Peter lẫn John đều không có ai thích uống nước trà cả.<br><strong>2. Phân tích sự hòa hợp 4 đáp án:</strong> Cấu trúc phủ định song hành hai người: 'Neither A nor B + V (chia theo B)'.<br><strong>3. Tại sao đúng:</strong> Dùng liên từ tương hợp 'nor', động từ 'likes' thêm s vì chia theo chủ ngữ số ít gần nhất đứng cạnh nó là 'John'.<br><strong>4. Tại sao các từ khác sai:</strong> Dùng sai liên từ hoặc dính lỗi phủ định kép thừa thãi từ 'don't' (C)."
+            },
+            {
+                id: 42,
+                orig: "Mary will only come to the party if Peter is invited.",
+                prompt: "Unless ..............................................................................................................",
+                options: [
+                    "Peter is invited, Mary won't come to the party.",
+                    "Peter isn't invited, Mary will come to the party.",
+                    "Peter is invited, Mary will come to the party.",
+                    "Peter won't be invited, Mary doesn't come to the party."
+                ],
+                correct: "Peter is invited, Mary won't come to the party.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Trừ khi Peter được mời, nếu không Mary sẽ không đến tham dự bữa tiệc.<br><strong>2. Phân tích logic liên từ điều kiện phủ định 4 đáp án:</strong> 'Unless' có nghĩa là 'If ... not' (Trừ khi/Nếu không).<br><strong>3. Tại sao đúng:</strong> Câu gốc chỉ đi nếu được mời, nghĩa là không mời Peter thì Mary không đi ('Mary won't come').<br><strong>4. Tại sao các từ khác sai:</strong> Sai logic ý nghĩa thực tế hoặc dùng sai thì thời gian tương lai trong mệnh đề điều kiện."
+            },
+            {
+                id: 43,
+                orig: "He is very sorry he didn’t come to the meeting yesterday.",
+                prompt: "He apologies ....................................................................................................",
+                options: [
+                    "for not coming to the meeting yesterday.",
+                    "to not come to the meeting yesterday.",
+                    "for not to come to the meeting yesterday.",
+                    "about not coming to the meeting yesterday."
+                ],
+                correct: "for not coming to the meeting yesterday.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Anh ấy gửi lời xin lỗi vì đã không đến tham dự cuộc họp vào ngày hôm qua.<br><strong>2. Phân tích cấu trúc lời xin lỗi 4 đáp án:</strong> Đề bài cho cấu trúc 'apologizes' (viết đúng chuẩn là apologizes/apologises).<br><strong>3. Tại sao đúng:</strong> Công thức bất biến: <em>'apologize FOR (not) V-ing'</em> (xin lỗi vì đã làm/không làm gì).<br><strong>4. Tại sao các từ khác sai:</strong> Đi với động từ nguyên mẫu có to là sai hoàn toàn quy tắc ngữ pháp giới từ."
+            },
+            {
+                id: 44,
+                orig: "The demand for tickets was so great that people queued day and night. (SUCH)",
+                prompt: "It was................................................................................................................",
+                options: [
+                    "such a great demand for tickets that people queued day and night.",
+                    "so great demand for tickets that people queued day and night.",
+                    "such great demand for tickets that people queued day and night.",
+                    "too great a demand for tickets that people queued day and night."
+                ],
+                correct: "such a great demand for tickets that people queued day and night.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Đó là một nhu cầu mua vé lớn đến mức người dân phải xếp hàng rồng rắn cả ngày lẫn đêm.<br><strong>2. Phân tích cấu trúc nhấn mạnh kết quả 4 đáp án:</strong> Biến đổi từ công thức 'So... that' sang dùng từ khóa 'SUCH'.<br><strong>3. Tại sao đúng:</strong> Áp dụng công thức: <em>'It + be + such + a/an + adj + danh từ đếm được số ít (demand) + that...'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Thiếu mạo từ 'a' bắt buộc (C) hoặc dùng sai trạng từ so (B)."
+            },
+            {
+                id: 45,
+                orig: "I haven’t seen her for two years (LAST)",
+                prompt: "The...................................................................................................................",
+                options: [
+                    "last time I saw her was two years ago.",
+                    "last time I have seen her was two years ago.",
+                    "second year since I last saw her.",
+                    "time I last saw her is two years."
+                ],
+                correct: "last time I saw her was two years ago.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Lần cuối cùng tôi nhìn thấy cô ấy đã là từ cách đây hai năm trước rồi.<br><strong>2. Phân tích cấu trúc mốc thời gian 4 đáp án:</strong> Chuyển từ Hiện tại hoàn thành phủ định sang cấu trúc thời gian quá khứ với từ khóa 'LAST'.<br><strong>3. Tại sao đúng:</strong> Công thức: <em>'The last time + S + V2/V-ed (saw) + was + khoảng thời gian + ago'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Dùng sai thì hiện tại hoàn thành trong mệnh đề xác định mốc quá khứ (B) hoặc cấu trúc sai."
+            },
+            {
+                id: 46,
+                orig: "Now that his mother was being there, they said nothing about it. (ACCOUNT)",
+                prompt: "On ....................................................................................................................",
+                options: [
+                    "account of his mother being there, they said nothing about it.",
+                    "no account should they say anything about his mother being there.",
+                    "account of his mother's presence, they said anything about it.",
+                    "second thought, they said nothing about his mother being there."
+                ],
+                correct: "account of his mother being there, they said nothing about it.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Bởi vì mẹ anh ấy có mặt ở đó, họ đã không hé răng nửa lời về sự việc.<br><strong>2. Phân tích cụm từ 4 đáp án:</strong> Đề bài yêu cầu biến đổi bắt buộc chứa từ khóa 'ACCOUNT'.<br><strong>3. Tại sao đúng:</strong> Áp dụng cụm liên từ nguyên nhân: <em>'On account of + V-ing/Danh từ'</em> thay thế cho cụm từ 'Now that'.<br><strong>4. Tại sao các từ khác sai:</strong> 'On no account' mang nghĩa đảo ngữ cấm đoán hoàn toàn sai ngữ cảnh câu gốc."
+            },
+            {
+                id: 47,
+                orig: "The house seemed to have been unoccupied for several months. (LOOKED)",
+                prompt: "It.......................................................................................................................",
+                options: [
+                    "looked as if the house had been unoccupied for several months.",
+                    "looked like the house has been unoccupied for several months.",
+                    "seemed that the house was unoccupied for several months.",
+                    "looked as though the house was being unoccupied for several months."
+                ],
+                correct: "looked as if the house had been unoccupied for several months.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Ngôi nhà trông có vẻ như thể là đã không có người sinh sống từ vài tháng nay rồi.<br><strong>2. Phân tích giả định quá khứ 4 đáp án:</strong> Câu gốc dùng dạng hoàn thành 'to have been' chứng tỏ việc bỏ hoang xảy ra trước thời điểm quan sát.<br><strong>3. Tại sao đúng:</strong> Sử dụng <em>'It looked as if + S + Quá khứ hoàn thành (had been)'</em> để thể hiện hành động xảy ra trước quá khứ.<br><strong>4. Tại sao các từ khác sai:</strong> Chia sai thì hiện tại hoàn thành (B) hoặc chia sai dạng tiếp diễn không đúng bản chất (D)."
+            },
+            {
+                id: 48,
+                orig: "Although Judy was severely disabled, she participated in many sports.",
+                prompt: "Despite.............................................................................................................",
+                options: [
+                    "being severely disabled, Judy participated in many sports.",
+                    "her severe disability, Judy didn't participate in many sports.",
+                    "Judy was severely disabled, she participated in many sports.",
+                    "of being severely disabled, Judy participated in many sports."
+                ],
+                correct: "being severely disabled, Judy participated in many sports.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Bất chấp việc bị khuyết tật nặng, Judy vẫn tích cực tham gia vào rất nhiều bộ môn thể thao.<br><strong>2. Phân tích cấu trúc nhượng bộ cụm từ 4 đáp án:</strong> Quy tắc sau liên từ 'Despite' là một cụm danh từ hoặc động từ đuôi -ing.<br><strong>3. Tại sao đúng:</strong> Rút gọn đồng chủ ngữ dùng dạng <em>'being + tính từ'</em> giữ nguyên bản chất ngữ nghĩa câu gốc.<br><strong>4. Tại sao các từ khác sai:</strong> B viết sai nghĩa; C bê nguyên mệnh đề là sai; D dính lỗi ngữ pháp nghiêm trọng thêm từ 'of' (Despite không đi với of)."
+            },
+            {
+                id: 49,
+                orig: "I’m sorry I was rude to you yesterday.",
+                prompt: "I apologize........................................................................................................",
+                options: [
+                    "for being rude to you yesterday.",
+                    "to be rude to you yesterday.",
+                    "about being rude to you yesterday.",
+                    "for my rudeness to you yesterday."
+                ],
+                correct: "for being rude to you yesterday.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Tôi xin lỗi vì ngày hôm qua đã có thái độ bất lịch sự thô lỗ đối với bạn.<br><strong>2. Phân tích cấu trúc động từ xin lỗi 4 đáp án:</strong> Động từ tự thú lỗi lầm cá nhân: 'apologize'.<br><strong>3. Tại sao đúng:</strong> Áp dụng chuẩn công thức cố định: <em>'apologize FOR + V-ing (being)'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Dùng sai cấu trúc động từ nguyên mẫu có to (B) hoặc dùng sai giới từ quy định (C)."
+            },
+            {
+                id: 50,
+                orig: "Nobody can deny that she has a beautiful voice.",
+                prompt: "It.......................................................................................................................",
+                options: [
+                    "cannot be denied that she has a beautiful voice.",
+                    "is denied that she has a beautiful voice.",
+                    "can be denied that she has a beautiful voice.",
+                    "is no denial that she has a beautiful voice."
+                ],
+                correct: "cannot be denied that she has a beautiful voice.",
+                explain: "<strong>1. Dịch nghĩa:</strong> Không thể phủ nhận được rằng cô ấy sở hữu một giọng ca vô cùng tuyệt vời.<br><strong>2. Phân tích thể bị động chủ ngữ giả 4 đáp án:</strong> Câu gốc khẳng định 'Không ai có thể phủ nhận' (phủ định của phủ định là khẳng định tuyệt đối).<br><strong>3. Tại sao đúng:</strong> Chuyển sang cấu trúc bị động khiếm khuyết với chủ ngữ giả It: <em>'It cannot be denied that + mệnh đề'</em>.<br><strong>4. Tại sao các từ khác sai:</strong> Làm biến đổi mất đi từ phủ định 'cannot' khiến câu bị ngược hoàn toàn về mặt ngữ nghĩa gốc."
+            }
+        ];
+
+        let studentAnswersTrack = {};
+
+        // Thuật toán đảo vị trí mảng ngẫu nhiên (Fisher-Yates Shuffle) cho các đáp án A B C D tăng tính khách quan mỗi lần học sinh tải trang
+        function mixOptionsRandomly(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Kỹ thuật kết xuất giao diện cây DOM tự động đầy đủ 50 câu hỏi không cắt bớt
+        function buildQuizLayout() {
+            const rootNode = document.getElementById('quiz-injector-node');
+            rootNode.innerHTML = "";
+
+            dataset.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-block-${item.id}`;
+
+                // Tạo mảng bản sao đáp án để đảo vị trí ngẫu nhiên
+                let randomizedOptions = [...item.options];
+                mixOptionsRandomly(randomizedOptions);
+
+                let buttonsListMarkup = `<div class="options-list">`;
+                randomizedOptions.forEach((textOption, optIdx) => {
+                    const alphabetPrefix = ["A", "B", "C", "D"];
+                    const statusCheck = (textOption === item.correct);
+                    buttonsListMarkup += `
+                        <button class="option-btn" data-correct="${statusCheck}" onclick="validateUserClick(this, ${item.id})">
+                            <strong>${alphabetPrefix[optIdx]}.</strong> ${textOption}
+                        </button>
+                    `;
+                });
+                buttonsListMarkup += `</div>`;
+
+                card.innerHTML = `
+                    <div class="card-meta-title">Câu kiểm tra số ${index + 1} / 50</div>
+                    <div class="question-text"><strong>Câu gốc:</strong> ${item.orig}</div>
+                    <div class="prompt-text">➔ ${item.prompt}</div>
+                    ${buttonsListMarkup}
+                    <div class="explanation-box" id="explain-box-id-${item.id}">
+                        <div class="explanation-title">💡 BẢNG GIẢI THÍCH CHI TIẾT TỪ MS LÊ HẰNG ENGLISH:</div>
+                        <div class="explanation-content">${item.explain}</div>
+                    </div>
+                `;
+                rootNode.appendChild(card);
+            });
+        }
+
+        // Kiểm tra chấm điểm phản hồi ngay lập tức khi bấm chọn đáp án
+        function validateUserClick(buttonElement, questionId) {
+            if (studentAnswersTrack[questionId] !== undefined) return;
+
+            const isCorrect = buttonElement.getAttribute('data-correct') === 'true';
+            studentAnswersTrack[questionId] = isCorrect;
+
+            const currentCardNode = document.getElementById(`q-card-block-${questionId}`);
+            const siblingButtons = currentCardNode.querySelectorAll('.option-btn');
+
+            if (isCorrect) {
+                buttonElement.classList.add('correct');
+                triggerSyntheticSound('correct');
+                launchConfettiEffect();
+            } else {
+                buttonElement.classList.add('wrong');
+                currentCardNode.classList.add('shake-animation');
+                triggerSyntheticSound('wrong');
+
+                // Tự động tìm và làm nổi bật màu xanh cho đáp án đúng của câu đó lên
+                siblingButtons.forEach(btn => {
+                    if (btn.getAttribute('data-correct') === 'true') {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                setTimeout(() => {
+                    currentCardNode.classList.remove('shake-animation');
+                }, 450);
+            }
+
+            // Khóa tương tác tất cả các nút bấm lựa chọn của câu hiện tại
+            siblingButtons.forEach(btn => btn.classList.add('disabled'));
+
+            // TỰ ĐỘNG HIỆN KHUNG GIẢI THÍCH 4 BƯỚC NGAY LẬP TỨC CHO HỌC SINH ĐỌC GHI CHÉP
+            document.getElementById(`explain-box-id-${questionId}`).style.display = "block";
+        }
+
+        // Kỹ thuật Canvas lập trình hiệu ứng pháo giấy Confetti mừng câu trả lời đúng
+        const canvasElement = document.getElementById('confetti-canvas');
+        const ctxNode = canvasElement.getContext('2d');
+        let confettiCollection = [];
+
+        function dynamicCanvasResize() {
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+        }
+        window.addEventListener('resize', dynamicCanvasResize);
+        dynamicCanvasResize();
+
+        function launchConfettiEffect() {
+            const colors = ['#FF4757', '#00D26A', '#8854C0', '#FDCB6E', '#00C9A7', '#FFFFFF'];
+            for (let i = 0; i < 40; i++) {
+                confettiCollection.push({
+                    x: Math.random() * canvasElement.width,
+                    y: Math.random() * canvasElement.height - canvasElement.height,
+                    size: Math.random() * 6 + 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedX: Math.random() * 4 - 2,
+                    speedY: Math.random() * 4 + 4,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 4 - 2
+                });
+            }
+        }
+
+        function animationLoop() {
+            ctxNode.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            confettiCollection.forEach((p, index) => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.rotation += p.rotationSpeed;
+
+                ctxNode.save();
+                ctxNode.translate(p.x, p.y);
+                ctxNode.rotate((p.rotation * Math.PI) / 180);
+                ctxNode.fillStyle = p.color;
+                ctxNode.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                ctxNode.restore();
+
+                if (p.y > canvasElement.height) {
+                    confettiCollection.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animationLoop);
+        }
+        requestAnimationFrame(animationLoop);
+
+        // Logic tổng kết điểm số cuối cùng bài làm khi nhấn nút Nộp Bài
+        function processQuizEvaluation() {
+            let totalQuestions = dataset.length;
+            let correctCount = 0;
+
+            dataset.forEach(q => {
+                if (studentAnswersTrack[q.id] === true) {
+                    correctCount++;
+                }
+            });
+
+            let percentageResult = (correctCount / totalQuestions) * 100;
+            let finalTeacherComment = "";
+
+            if (percentageResult < 50) {
+                finalTeacherComment = "Điểm lần này chưa cao lắm, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!";
+            } else if (percentageResult >= 60 && percentageResult <= 80) {
+                finalTeacherComment = "Con đã có tiến bộ khá ổn rồi, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!";
+            } else {
+                finalTeacherComment = "Làm tốt lắm, con cố gắng ring điểm 10 ở lần sau nha!";
+            }
+
+            document.getElementById('score-text').innerText = `${correctCount} / ${totalQuestions}`;
+            document.getElementById('feedback-text').innerText = finalTeacherComment;
+
+            // Bật bung Popup kết quả lên màn hình
+            document.getElementById('score-modal').classList.add('active');
+
+            // Bắn một loạt pháo giấy liên hoàn nếu điểm số đạt từ mức khá giỏi trở lên
+            if (percentageResult >= 75) {
+                for (let k = 0; k < 5; k++) {
+                    setTimeout(launchConfettiEffect, k * 250);
+                }
+            }
+        }
+
+        // Tải lại bài thi mới tinh xóa sạch bộ nhớ tạm
+        function reloadQuizLayout() {
+            studentAnswersTrack = {};
+            confettiCollection = [];
+            document.getElementById('score-modal').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(buildQuizLayout, 400);
+        }
+
+        // Khởi tạo kích hoạt trang web ngay khi toàn bộ cây tài nguyên được load xong
+        window.onload = function() {
+            buildQuizLayout();
+        };
+    </script>
+</body>
+</html>
